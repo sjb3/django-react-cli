@@ -1,21 +1,21 @@
-import React, { Component } from "react";
+import React from "react";
 import { Form, Icon, Input, Button, Spin } from "antd";
 import { connect } from "react-redux";
 import { NavLink } from "react-router-dom";
 import * as actions from "../store/actions/auth";
 
-const antIcon = <Icon type="loading" style={{ fontSize: 40 }} spin />;
+const FormItem = Form.Item;
+const antIcon = <Icon type="loading" style={{ fontSize: 24 }} spin />;
 
-class NormalLoginForm extends Component {
+class NormalLoginForm extends React.Component {
   handleSubmit = e => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        // console.log("Received values of form: ", values);
-        this.props.onAuth(values.username, values.password);
+        this.props.onAuth(values.userName, values.password);
+        this.props.history.push("/");
       }
     });
-    this.props.history.push("/");
   };
 
   render() {
@@ -32,7 +32,7 @@ class NormalLoginForm extends Component {
           <Spin indicator={antIcon} />
         ) : (
           <Form onSubmit={this.handleSubmit} className="login-form">
-            <Form.Item>
+            <FormItem>
               {getFieldDecorator("userName", {
                 rules: [
                   { required: true, message: "Please input your username!" }
@@ -45,8 +45,9 @@ class NormalLoginForm extends Component {
                   placeholder="Username"
                 />
               )}
-            </Form.Item>
-            <Form.Item>
+            </FormItem>
+
+            <FormItem>
               {getFieldDecorator("password", {
                 rules: [
                   { required: true, message: "Please input your Password!" }
@@ -60,21 +61,22 @@ class NormalLoginForm extends Component {
                   placeholder="Password"
                 />
               )}
-            </Form.Item>
-            <Form.Item>
+            </FormItem>
+
+            <FormItem>
               <Button
-                style={{ marginRight: "10px" }}
                 type="primary"
                 htmlType="submit"
+                style={{ marginRight: "10px" }}
               >
                 Login
               </Button>
               Or
               <NavLink style={{ marginRight: "10px" }} to="/signup/">
                 {" "}
-                Signup
+                signup
               </NavLink>
-            </Form.Item>
+            </FormItem>
           </Form>
         )}
       </div>
@@ -82,9 +84,7 @@ class NormalLoginForm extends Component {
   }
 }
 
-const WrappedNormalLoginForm = Form.create({ name: "normal_login" })(
-  NormalLoginForm
-);
+const WrappedNormalLoginForm = Form.create()(NormalLoginForm);
 
 const mapStateToProps = state => {
   return {
@@ -92,6 +92,7 @@ const mapStateToProps = state => {
     error: state.error
   };
 };
+
 const mapDispatchToProps = dispatch => {
   return {
     onAuth: (username, password) =>
