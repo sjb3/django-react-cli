@@ -10,6 +10,7 @@ class App extends Component {
   componentDidMount() {
     this.props.onTryAutoSignup();
   }
+
   render() {
     return (
       <div>
@@ -22,16 +23,19 @@ class App extends Component {
     );
   }
 }
+
 const mapStateToProps = state => {
   return {
-    isAuthenticated: state.token !== null
+    isAuthenticated: state.token !== null // Authenticated becomes true
   };
 };
+
 const mapDispatchToProps = dispatch => {
   return {
     onTryAutoSignup: () => dispatch(actions.authCheckState())
   };
 };
+
 export default connect(
   mapStateToProps,
   mapDispatchToProps

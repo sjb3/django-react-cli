@@ -22,7 +22,7 @@ class CustomLayout extends Component {
                 Logout
               </Menu.Item>
             ) : (
-              <Menu.Item key="2">
+              <Menu.Item key="3">
                 <Link to="/login">Login</Link>
               </Menu.Item>
             )}

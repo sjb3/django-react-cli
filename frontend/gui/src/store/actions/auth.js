@@ -25,7 +25,7 @@ export const logout = () => {
   localStorage.removeItem("user");
   localStorage.removeItem("expirationDate");
   return {
-    type: actionTypes.AUTH_START
+    type: actionTypes.AUTH_LOGOUT
   };
 };
 
@@ -42,8 +42,8 @@ export const authLogin = (username, password) => {
     dispatch(authStart());
     axios
       .post("http://127.0.0.1:8000/rest-auth/login/", {
-        username,
-        password
+        username: username,
+        password: password
       })
       .then(res => {
         const token = res.data.key;
@@ -64,10 +64,10 @@ export const authSignup = (username, email, password1, password2) => {
     dispatch(authStart());
     axios
       .post("http://127.0.0.1:8000/rest-auth/registration/", {
-        username,
-        email,
-        password1,
-        password2
+        username: username,
+        email: email,
+        password1: password1,
+        password2: password2
       })
       .then(res => {
         const token = res.data.key;
